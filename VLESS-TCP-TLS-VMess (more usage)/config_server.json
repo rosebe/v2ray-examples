@@ -20,8 +20,8 @@
                         "dest": 80
                     },
                     {
-                        "path": "/websocket", // 必须换成自定义的 PATH
-                        "dest": 1234,
+                        "path": "/fakehttpheader", // 必须换成自定义的 PATH
+                        "dest": 2345,
                         "xver": 1
                     }
                 ]
@@ -43,9 +43,9 @@
             }
         },
         {
-            "port": 1234,
+            "port": 2345,
             "listen": "127.0.0.1",
-            "protocol": "vless",
+            "protocol": "vmess",
             "settings": {
                 "clients": [
                     {
@@ -53,15 +53,21 @@
                         "level": 0,
                         "email": "love@v2fly.org"
                     }
-                ],
-                "decryption": "none"
+                ]
             },
             "streamSettings": {
-                "network": "ws",
+                "network": "tcp",
                 "security": "none",
-                "wsSettings": {
-                    "acceptProxyProtocol": true, // 提醒：若你用 Nginx/Caddy 等反代 WS，需要删掉这行
-                    "path": "/websocket" // 必须换成自定义的 PATH，需要和上面的一致
+                "tcpSettings": {
+                    "acceptProxyProtocol": true,
+                    "header": {
+                        "type": "http",
+                        "request": {
+                            "path": [
+                                "/fakehttpheader" // 必须换成自定义的 PATH，需要和上面的一致
+                            ]
+                        }
+                    }
                 }
             }
         }
